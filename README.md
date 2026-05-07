@@ -1,4 +1,4 @@
-MRE for RTIC hang issue. Spawning a task on a SWTM32WB09-NUCLEO board appears to cause an infinite loop. Not even sure if it even is an infinite loop either.
+MRE for RTIC hang issue. Spawning a task on a STM32WB09-NUCLEO board appears to cause an infinite loop. Not sure if it even is an infinite loop either.
 
 Run with command: 
 
