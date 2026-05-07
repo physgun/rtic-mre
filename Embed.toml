@@ -1,0 +1,10 @@
+[default.probe]
+protocol = "Swd"
+
+[default.general]
+chip = "STM32WB09KE"
+log_level = "WARN"
+#connect_under_reset = true
+
+[default.rtt]
+enabled = true

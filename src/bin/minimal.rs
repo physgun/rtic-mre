@@ -1,16 +1,17 @@
 #![no_main]
 #![no_std]
-#![feature(type_alias_impl_trait)]
+//#![feature(type_alias_impl_trait)]
 
 use test_app as _; // global logger + panicking-behavior + memory layout
 
 // TODO(7) Configure the `rtic::app` macro
 #[rtic::app(
     // TODO: Replace `some_hal::pac` with the path to the PAC
-    device = some_hal::pac,
+    device = test_app::pac,
+    peripherals = false,
     // TODO: Replace the `FreeInterrupt1, ...` with free interrupt vectors if software tasks are used
     // You can usually find the names of the interrupt vectors in the some_hal::pac::interrupt enum.
-    dispatchers = [FreeInterrupt1, ...]
+    dispatchers = [PKA]
 )]
 mod app {
     // Shared resources go here
@@ -26,7 +27,7 @@ mod app {
     }
 
     #[init]
-    fn init(cx: init::Context) -> (Shared, Local) {
+    fn init(_cx: init::Context) -> (Shared, Local) {
         defmt::info!("init");
 
         // TODO setup monotonic if used
@@ -34,8 +35,12 @@ mod app {
         // let token = rtic_monotonics::create_systick_token!();
         // rtic_monotonics::systick::Systick::new(cx.core.SYST, sysclk, token);
 
+        // MRE: You can blink LEDs and what-not with the PAC in here, 
+        // but anything after a task spawn won't show up on the board.
 
-        task1::spawn().ok();
+        // MRE: Commenting out this line will cause "idle" to print.
+        // It won't print otherwise.
+        //task1::spawn().ok();
 
         (
             Shared {

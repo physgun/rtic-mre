@@ -4,17 +4,40 @@ name = "test-app"
 edition = "2021"
 version = "0.1.0"
 
+[features]
+# Pick one of these:
+#stm32wb05 = ["stm32-metapac/stm32wb05kz"]
+#stm32wb06 = ["stm32-metapac/stm32wb06kc"]
+#stm32wb07 = ["stm32-metapac/stm32wb07kc"]
+stm32wb09 = ["stm32-metapac/stm32wb09ke"]
+
+[dependencies.stm32-metapac]
+git = "https://github.com/embassy-rs/stm32-data-generated"
+tag = "stm32-data-8f3acc9b443ff3ea172178656885df891937f2a2"
+features = ["metadata", "defmt", "rt"]
+
 [dependencies]
 cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
-defmt = { version = "0.3", features = ["encoding-rzcobs"] }
-defmt-brtt = { version = "0.1", default-features = false, features = ["rtt"] }
-panic-probe = { version = "0.3", features = ["print-defmt"] }
+
+################# VERSION BUMP #################
+#defmt = { version = "0.3", features = ["encoding-rzcobs"] }
+defmt = { version = "1"}
+#panic-probe = { version = "0.3", features = ["print-defmt"] }
+panic-probe = { version = "1", features = ["print-defmt"] }
+
+################# REPLACED #################
+#defmt-brtt = { version = "0.1", default-features = false, features = ["rtt"] }
+defmt-rtt = "1.1"
+
 # TODO(4) Select the correct rtic backend
-rtic = { version = "2.0.0", features = [ "$RTIC_BACKEND" ] }
+rtic = { version = "2.0.0", features = [ "thumbv6-backend" ] }
 # TODO(5) Add hal as dependency
-some-hal = "1.2.3"
+# See above [dependencies]
 # TODO add a monotonic if you use scheduling
 # rtic-monotonics = { version = "1.0.0", features = [ "cortex-m-systick" ]}
+
+################# ADDED DEPENDENCIES #################
+portable-atomic = { version = "1", features = ["require-cas", "unsafe-assume-single-core"]}
 
 # cargo build/run
 [profile.dev]

@@ -1,3 +1,14 @@
+MRE for RTIC hang issue. Spawning a task on a SWTM32WB09-NUCLEO board appears to cause an infinite loop. Not even sure if it even is an infinite loop either.
+
+Run with command: 
+
+```console 
+$ cargo embed --chip STIM32WB09KE --release --features stm32wb09
+```
+
+Original README.md below:
+
+
 # `app-template`
 
 > Quickly set up a [`probe-rs`] + [`defmt`] + [`flip-link`] embedded project
